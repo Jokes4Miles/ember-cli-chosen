@@ -31,7 +31,7 @@ module.exports = {
     var tree;
 
     // Only include the Chosen sprites if we're including Chosen CSS in the build
-    if(this.app.options['ember-cli-chosen'].importChosenCSS) {
+    if(!process.env.EMBER_CLI_FASTBOOT && this.app.options['ember-cli-chosen'].importChosenCSS) {
       tree = pickFiles(this.app.bowerDirectory + '/chosen', {
         srcDir: '/',
         files: ['*.png'],
