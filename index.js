@@ -7,24 +7,25 @@ var merge         = require('lodash.merge');
 module.exports = {
   name: 'ember-cli-chosen',
   included: function(app) {
-    this._super.included(app);
+    if (!process.env.EMBER_CLI_FASTBOOT) {
+      this._super.included(app);
+      // Setup default options for ember-cli-chosen
+      var options = merge({
+        'jQuery': true,
+        'importChosenCSS': true
+      }, app.options['ember-cli-chosen'] || {});
 
-    // Setup default options for ember-cli-chosen
-    var options = merge({
-      'jQuery': true,
-      'importChosenCSS': true
-    }, app.options['ember-cli-chosen'] || {});
+      options.chosenJSType = options.jQuery ? 'jquery' : 'proto';
 
-    options.chosenJSType = options.jQuery ? 'jquery' : 'proto';
+      // Update `ember-cli-chosen` options on our `app` with updated hash
+      app.options['ember-cli-chosen'] = options;
 
-    // Update `ember-cli-chosen` options on our `app` with updated hash
-    app.options['ember-cli-chosen'] = options;
+      // Import the correct JS for chosen
+      app.import(app.bowerDirectory + '/chosen/chosen.' + options.chosenJSType + '.js');
 
-    // Import the correct JS for chosen
-    app.import(app.bowerDirectory + '/chosen/chosen.' + options.chosenJSType + '.js');
-
-    // Import Chosen CSS (done by default)
-    if(options.importChosenCSS) { app.import(app.bowerDirectory + '/chosen/chosen.css'); }
+      // Import Chosen CSS (done by default)
+      if(options.importChosenCSS) { app.import(app.bowerDirectory + '/chosen/chosen.css'); }
+    }
   },
   treeForPublic: function(treeName) {
     var tree;
