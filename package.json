@@ -22,8 +22,7 @@
     "broccoli-sass": "aexmachina/broccoli-sass#v0.4.0",
     "ember-cli": "git://github.com/ember-cli/ember-cli",
     "ember-cli-app-version": "0.3.1",
-    "ember-cli-autoprefixer": "0.3.0",
-    "ember-cli-babel": "^4.0.0",
+    "ember-cli-autoprefixer": "0.3.0",    
     "ember-cli-content-security-policy": "0.3.0",
     "ember-cli-dependency-checker": "0.0.7",
     "ember-cli-eg-code-highlight": "^0.1.3",
@@ -41,6 +40,7 @@
   },
   "dependencies": {
     "broccoli-static-compiler": "^0.2.1",
+    "ember-cli-babel": "^4.0.0",
     "lodash.merge": "^3.0.2"
   },
   "keywords": [
