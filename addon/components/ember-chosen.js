@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   value: null,
   width: '100%',
   selectionDidChange: null,
-  _options: function() {
+  _options: Ember.computed('prompt', 'isRtl', 'multiple', 'disableSearchThreshold', 'noResultsText', 'maxSelectedOptions', 'width', function() {
     var options = {};
 
     if(!Ember.isNone(this.get('disableSearchThreshold'))) { options['disable_search_threshold'] = this.get('disableSearchThreshold'); }
@@ -23,9 +23,8 @@ export default Ember.Component.extend({
     if(!Ember.isNone(this.get('width'))) { options['width'] = this.get('width'); }
 
     return options;
-  }.property('prompt', 'isRtl', 'multiple', 'disableSearchThreshold',
-             'noResultsText', 'maxSelectedOptions', 'width'),
-  _setupChosen: function() {
+  }),
+  _setupChosen: Ember.observer( '_options', function() {
     var _this = this,
       options = _this.get('_options'),
       isMultiple = _this.get('multiple'),
@@ -71,7 +70,7 @@ export default Ember.Component.extend({
     }).on('chosen:maxselected', function(e, chosen) {
       _this.sendAction('chosenMaxSelected', e, chosen);
     });
-  }.observes('_options'),
+  }),
   didInsertElement: function() {
     this._super();
     this._setupChosen();
