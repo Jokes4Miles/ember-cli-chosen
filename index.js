@@ -7,7 +7,7 @@ var merge         = require('lodash.merge');
 module.exports = {
   name: 'ember-cli-chosen',
   included: function(app) {
-    if (!process.env.EMBER_CLI_FASTBOOT) {
+    if (typeof FastBoot === 'undefined') {
       this._super.included(app);
       // Setup default options for ember-cli-chosen
       var options = merge({
@@ -31,7 +31,7 @@ module.exports = {
     var tree;
 
     // Only include the Chosen sprites if we're including Chosen CSS in the build
-    if(!process.env.EMBER_CLI_FASTBOOT && this.app.options['ember-cli-chosen'].importChosenCSS) {
+    if(typeof FastBoot === 'undefined' && this.app.options['ember-cli-chosen'].importChosenCSS) {
       tree = pickFiles(this.app.bowerDirectory + '/chosen', {
         srcDir: '/',
         files: ['*.png'],
